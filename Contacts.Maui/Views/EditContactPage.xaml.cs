@@ -32,11 +32,28 @@ public partial class EditContactPage : ContentPage
 
     private void btnUpdate_Clicked(object sender, EventArgs e)
     {
-		_contact.Name = entryName.Text;
+		if (nameValidator.IsNotValid) 
+		{
+			DisplayAlert("Error", "Name is required.", "Ok");
+			return;
+		}
+
+        if (emailValidator.IsNotValid)
+        {
+			foreach (var error in emailValidator.Errors)
+			{
+				DisplayAlert("Error", error.ToString(), "Ok");
+				return;
+			}
+        }
+
+
+        _contact.Name = entryName.Text;
 		_contact.Email = entryEmail.Text;
 		_contact.Address = entryAddress.Text;
 		_contact.Phone = entryPhone.Text;
 
 		ContactRepository.UpdateContact(_contact.ContactId, _contact);
+		Shell.Current.GoToAsync("..");
     }
 }
