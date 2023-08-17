@@ -13,7 +13,7 @@
         RowHeight="70"
         ItemSelected="listContacts_ItemSelected"
         ItemTapped="listContacts_ItemTapped">
-
+te
         <ListView.ItemTemplate>
             <DataTemplate>
                 <TextCell 
