@@ -1,3 +1,6 @@
+using Contacts.Maui.Models;
+using System.Security.Cryptography;
+
 namespace Contacts.Maui.Views;
 
 public partial class AddContactPage : ContentPage
@@ -7,8 +10,24 @@ public partial class AddContactPage : ContentPage
 		InitializeComponent();
 	}
 
-    private void btnCancel_Clicked(object sender, EventArgs e)
+    private void contactCtrl_OnSave(object sender, EventArgs e)
     {
-		Shell.Current.GoToAsync($"//{nameof(ContactPage)}");
+        ContactRepository.AddContact(new Models.Contact { 
+            Name = contactCtrl.Name,
+            Phone = contactCtrl.Phone,
+            Email = contactCtrl.Email,
+            Address = contactCtrl.Address
+        });
+        Shell.Current.GoToAsync($"//{nameof(ContactPage)}");
+    }
+
+    private void contactCtrl_OnCancel(object sender, EventArgs e)
+    {
+        Shell.Current.GoToAsync($"//{nameof(ContactPage)}");
+    }
+
+        private void contactCtrl_OnError(object sender, string e)
+    {
+        DisplayAlert("Error", e, "Ok");
     }
 }
